@@ -44,7 +44,7 @@ class Backtester:
         
         # Generate signals
         df['signal'] = 0
-        df['signal'][long_window:] = np.where(df['SMA_short'][long_window:] > df['SMA_long'][long_window:], 40, -30)
+        df['signal'][long_window:] = np.where(df['SMA_short'][long_window:] > df['SMA_long'][long_window:], 30, -30)
         df['position'] = df['signal'].rolling(window=2).sum()
         #df['position'] = df['signal'].diff()
 
