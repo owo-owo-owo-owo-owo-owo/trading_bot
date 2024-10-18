@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import false
 
+import strategy
+from strategy import Strategy
+
 import config
 from database import Database
 
@@ -28,28 +31,6 @@ class Backtester:
         df.set_index('timestamp', inplace=True)
         self.data = df
 
-    def simple_moving_average_crossover(self, short_window=config.SMA_SHORT_WINDOW, long_window=config.SMA_LONG_WINDOW):
-        """
-        Implement a simple moving average crossover strategy for backtesting.
-        :param short_window: Window for the short-term moving average
-        :param long_window: Window for the long-term moving average
-        """
-        if self.data is None:
-            print("No data available for backtesting.")
-            return
-        
-        df = self.data.copy()
-        df['SMA_short'] = df['close'].rolling(window=short_window).mean()    #calcolo del SMA
-        df['SMA_long'] = df['close'].rolling(window=long_window).mean()
-        
-        # Generate signals
-        df['signal'] = 0
-        df['signal'][long_window:] = np.where(df['SMA_short'][long_window:] > df['SMA_long'][long_window:], 30, -30)
-        df['position'] = df['signal'].rolling(window=2).sum()
-        #df['position'] = df['signal'].diff()
-
-        # Return the backtested DataFrame
-        return df
 
     def calculate_performance(self, df):
         """
@@ -74,7 +55,7 @@ class Backtester:
         Run the entire backtesting process.
         """
         self.fetch_historical_data()
-        backtested_df = self.simple_moving_average_crossover()
+        backtested_df = Strategy.sma(self)
         if backtested_df is not None:
              performance_df = self.calculate_performance(backtested_df)
              backtested_df.to_csv('backtest_log.csv', sep='\t', index=False, encoding='utf-8')  #float_format='%.3f'

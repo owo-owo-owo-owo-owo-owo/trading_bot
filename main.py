@@ -1,4 +1,5 @@
 # main.py
+from pandas.errors import SettingWithCopyWarning
 from tensorflow.python.types.doc_typealias import document
 from tensorflow.tools.docs.doc_controls import doc_in_current_and_subclasses
 
@@ -11,6 +12,7 @@ import warnings
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
+    warnings.simplefilter(action='ignore', category=SettingWithCopyWarning)
     # Use configuration variables from config.py
     trading_symbol = config.TRADING_SYMBOL
     time_frame = config.CANDLESTICK_DURATION
