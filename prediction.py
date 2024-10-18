@@ -1,3 +1,6 @@
+
+# currently not used
+
 from ML_model import LSTMModel
 
 def make_prediction(data):
