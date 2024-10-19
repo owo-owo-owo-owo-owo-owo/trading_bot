@@ -1,12 +1,10 @@
 from fileinput import close
-
 import numpy as np
 import pandas as pd
 import config
-import database
-from config import STRATEGY
 from database import Database
 from ta.trend import macd
+
 
 class MACD_strat:
     def __init__(self):
@@ -19,4 +17,7 @@ class MACD_strat:
             return
 
         df = self.data.copy()
-        df["position"] = macd(df["close"],window_slow=30,window_fast=6,fillna=False)
+        df["macd"] = macd(df["close"],window_slow=30,window_fast=6,fillna=False)  #calcolo indicatore MACD fatto automaticamente da ta.tre.macd
+        df["position"] = np.where(df['macd'] > 0, 30, -30)
+
+        return df
