@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import false
 
-import strategy
-from strategy import Strategy
+from sma_strat import SMA_strat
+from macd_strat import MACD_strat
+
 
 import config
 from database import Database
@@ -48,14 +49,14 @@ class Backtester:
         print(f"Total Return: {((final_return - initial_capital) / initial_capital) * 100:.2f}%")
         
         # Output performance summary
-        return df[['close', 'SMA_short', 'SMA_long', 'position', 'cumulative_returns']]
+        #return df[['close', 'SMA_short', 'SMA_long', 'position', 'cumulative_returns']]
 
     def run_backtest(self):
         """
         Run the entire backtesting process.
         """
         self.fetch_historical_data()
-        backtested_df = Strategy.sma(self)
+        backtested_df = MACD_strat.macd(self)
         if backtested_df is not None:
              performance_df = self.calculate_performance(backtested_df)
              backtested_df.to_csv('backtest_log.csv', sep='\t', index=False, encoding='utf-8')  #float_format='%.3f'

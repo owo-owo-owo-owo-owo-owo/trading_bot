@@ -5,7 +5,7 @@ import database
 from database import Database
 
 
-class Strategy:
+class SMA_strat:
     def __init__(self):
         self.db = Database()
         self.data = None

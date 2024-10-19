@@ -28,4 +28,5 @@ MODEL_NAME =f'MODEL_{TRADING_SYMBOL}_{CANDLESTICK_DURATION}_{LOOKBACK_PERIOD}_{L
 THRESHOLD = 0.6  # Threshold for the certainty required for trading decision
 
 # Strategy Selection
-STRATEGY = 'SMA_Crossover'  # Options: 'SMA_Crossover', 'LSTM_Prediction', 'Custom'
+
+STRATEGY = 'macd_strategy'

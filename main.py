@@ -39,18 +39,11 @@ def main():
         print(f"Inserted {len(ohlc_data)} rows into {table_name} table.", "\n")
 
     # Strategy selector
-    if config.STRATEGY == 'SMA_Crossover':
-        print("Running Simple Moving Average Crossover Backtest..." "\n")
-        backtester = Backtester(symbol=trading_symbol, time_frame=time_frame)
-        backtester.run_backtest()
-    elif config.STRATEGY == 'LSTM_Prediction':
-        print("Running LSTM Model Prediction..." "\n")
-        # Initialize LSTM model and run prediction
-        lstm_model = LSTMModel(time_frame=time_frame, model_name=config.MODEL_NAME)
-        lstm_model.run()
 
-    else:
-        print(f"Strategy {config.STRATEGY} not recognized." "\n")
+    if config.STRATEGY is not None:
+            print(f"Running strategy {config.STRATEGY}" "\n")
+            Backtester(symbol=trading_symbol, time_frame=time_frame).run_backtest()
+
 
     db.close()
 
