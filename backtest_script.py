@@ -54,7 +54,7 @@ class Backtester:
         Run the entire backtesting process.
         """
         self.fetch_historical_data()
-        backtested_df = MACD_strat.macd(self)
+        backtested_df = config.STRATEGY(self)
 
         if backtested_df is not None:
          self.calculate_performance(backtested_df)

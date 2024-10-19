@@ -14,7 +14,6 @@ class DataFetcher:
         :return: List of tuples with OHLCV data
         """
         url = f"{config.BINANCE_BASE_URL}?symbol={symbol}&interval={interval}&limit={limit}"
-        print(url)
         response = requests.get(url)
 
         if response.status_code == 200:

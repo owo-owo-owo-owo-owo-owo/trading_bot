@@ -1,5 +1,6 @@
 # config.py
 
+
 # Database Configuration
 DATABASE_NAME = 'crypto_data.sqlite'
 
@@ -16,10 +17,9 @@ API_KEY = ''  # Leave blank for now if using a public API (no key required)
 API_SECRET = ''  # Leave blank for now
 
 # Backtesting Configuration
-INITIAL_CAPITAL = 100  # Starting capital for backtesting
-SMA_SHORT_WINDOW = 5  # Short window for SMA in the backtest strategy
-SMA_LONG_WINDOW = 30  # Long window for SMA in the backtest strategy
-Bet = 30
+INITIAL_CAPITAL = 1000000
+COMMISSION = 0.002
+
 
 
 # LSTM Model Configuration
@@ -31,4 +31,4 @@ THRESHOLD = 0.6  # Threshold for the certainty required for trading decision
 
 # Strategy Selection
 
-STRATEGY = 'macd_strategy'
+STRATEGY = 'MACD_strat.macd'
