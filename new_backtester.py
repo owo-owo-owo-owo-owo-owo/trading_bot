@@ -1,9 +1,8 @@
 import pandas as pd
 from backtesting import Backtest
 import config
-import example_strat
 from data_fetch import DataFetcher
-
+import example_strat
 
 
 def run_backtest():

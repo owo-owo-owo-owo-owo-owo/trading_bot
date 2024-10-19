@@ -1,10 +1,5 @@
-import numpy as np
-import pandas as pd
 import talib
-from backtesting import Backtest, Strategy
-import config
-from database import Database
-from data_fetch import DataFetcher
+from backtesting import Strategy
 
 
 class simplestrat(Strategy):

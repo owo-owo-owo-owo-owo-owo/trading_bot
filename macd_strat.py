@@ -1,12 +1,15 @@
 from fileinput import close
 import numpy as np
 import pandas as pd
+from backtesting import Strategy
+
 import config
+from config import STRATEGY
 from database import Database
 from ta.trend import macd
 
 
-class MACD_strat:
+class MACD_strat(Strategy):
     def __init__(self):
         self.db = Database()
         self.data = None
