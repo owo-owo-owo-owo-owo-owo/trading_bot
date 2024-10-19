@@ -20,7 +20,7 @@ def main():
     
     # Initialize database
     db = Database(db_name=config.DATABASE_NAME)
-    table_name = f'{trading_symbol}_{time_frame}'
+    table_name = f'{trading_symbol}_{time_frame}_{data_limit}'
     db.create_table(table_name)
 
     results = db.fetch_data(table_name)
