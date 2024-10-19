@@ -42,7 +42,7 @@ def main():
 
     if config.STRATEGY is not None:
             print(f"Running strategy {config.STRATEGY}" "\n")
-            Backtester(symbol=trading_symbol, candlestick_duration=candlestick_duration).run_backtest()
+            Backtester(symbol=trading_symbol).run_backtest()
 
 
     db.close()
