@@ -23,7 +23,7 @@ class Backtester:
         """
         Fetch historical OHLC data from the database and convert it into a pandas DataFrame.
         """
-        table_name = f'{self.symbol}_{self.time_frame}'
+        table_name = f'{self.symbol}_{self.time_frame}_{config.DATA_LIMIT}'
         raw_data = self.db.fetch_data(table_name)
         
         # Create a pandas DataFrame
