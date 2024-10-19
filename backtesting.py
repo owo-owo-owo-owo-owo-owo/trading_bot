@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import false
 
-import strategy
-from strategy import Strategy
+import sma_strat
+from strategy_experimental import MACD_strat
 
 import config
 from database import Database
@@ -55,7 +55,7 @@ class Backtester:
         Run the entire backtesting process.
         """
         self.fetch_historical_data()
-        backtested_df = Strategy.sma(self)
+        backtested_df = MACD_strat.macd(self)
         if backtested_df is not None:
              performance_df = self.calculate_performance(backtested_df)
              backtested_df.to_csv('backtest_log.csv', sep='\t', index=False, encoding='utf-8')  #float_format='%.3f'
