@@ -15,12 +15,12 @@ def main():
     warnings.simplefilter(action='ignore', category=SettingWithCopyWarning)
     # Use configuration variables from config.py
     trading_symbol = config.TRADING_SYMBOL
-    time_frame = config.CANDLESTICK_DURATION
+    candlestick_duration = config.CANDLESTICK_DURATION
     data_limit = config.DATA_LIMIT
     
     # Initialize database
     db = Database(db_name=config.DATABASE_NAME)
-    table_name = f'{trading_symbol}_{time_frame}_{data_limit}'
+    table_name = config.table_name
     db.create_table(table_name)
 
     results = db.fetch_data(table_name)
@@ -30,7 +30,7 @@ def main():
     if not results:
     # Fetch historical data
         fetcher = DataFetcher()
-        ohlc_data = fetcher.fetch_ohlc(symbol=trading_symbol, interval=time_frame, limit=data_limit)
+        ohlc_data = fetcher.fetch_ohlc(symbol=trading_symbol, interval=candlestick_duration, limit=data_limit)
 
     # Insert data into the database
     if ohlc_data:
@@ -42,7 +42,7 @@ def main():
 
     if config.STRATEGY is not None:
             print(f"Running strategy {config.STRATEGY}" "\n")
-            Backtester(symbol=trading_symbol, time_frame=time_frame).run_backtest()
+            Backtester(symbol=trading_symbol, candlestick_duration=candlestick_duration).run_backtest()
 
 
     db.close()
