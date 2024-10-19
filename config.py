@@ -19,6 +19,7 @@ API_SECRET = ''  # Leave blank for now
 INITIAL_CAPITAL = 100  # Starting capital for backtesting
 SMA_SHORT_WINDOW = 5  # Short window for SMA in the backtest strategy
 SMA_LONG_WINDOW = 30  # Long window for SMA in the backtest strategy
+Bet = 30
 
 
 # LSTM Model Configuration

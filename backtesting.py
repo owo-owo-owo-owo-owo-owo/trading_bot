@@ -9,6 +9,7 @@ from sma_strat import SMA_strat
 from macd_strat import MACD_strat
 
 
+
 import config
 from database import Database
 
@@ -38,7 +39,7 @@ class Backtester:
         """
         initial_capital = config.INITIAL_CAPITAL  # Starting capital for backtesting
         df['pct change'] = df['close'].pct_change()
-        df['strategy_returns'] = df['position'] * df['pct change']     #chi lo sa se sono davvero questi i ritorni (ne dubito)   #ho sistemato sopra forse ora da il risultato corretto
+        df['strategy_returns'] = config.Bet * df['position'] * df['pct change']     #chi lo sa se sono davvero questi i ritorni (ne dubito)   #ho sistemato sopra forse ora da il risultato corretto
 
         # Calculate cumulative returns
         df['cumulative_returns'] = df['strategy_returns'].cumsum()

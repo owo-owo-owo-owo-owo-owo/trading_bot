@@ -18,6 +18,15 @@ class MACD_strat:
 
         df = self.data.copy()
         df["macd"] = macd(df["close"],window_slow=30,window_fast=6,fillna=False)  #calcolo indicatore MACD fatto automaticamente da ta.trend.macd
-        df["position"] = np.where(df['macd'] > 0, 30, -30)
+        df["signal"] = np.where(df['macd'] > 0, 1, -1)
+
+        if df['signal'].roll(window=2).diff() == 1:
+            df['position'] = 1
+        elif df['signal'].roll(window=2).diff() == 0:
+            df['position'] = 0
+        elif df['position'].roll(window=2).diff() == -1:
+            df['position'] = -1
+
+
 
         return df
