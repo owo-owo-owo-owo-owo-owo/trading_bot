@@ -6,7 +6,7 @@ from tensorflow.tools.docs.doc_controls import doc_in_current_and_subclasses
 import config
 from database import Database
 from data_fetch import DataFetcher
-from backtesting import Backtester
+from backtest_script import Backtester
 from ML_model import LSTMModel
 import warnings
 
@@ -20,7 +20,7 @@ def main():
     
     # Initialize database
     db = Database(db_name=config.DATABASE_NAME)
-    table_name = config.table_name
+    table_name = config.db_name
     db.create_table(table_name)
 
     results = db.fetch_data(table_name)
@@ -42,7 +42,7 @@ def main():
 
     if config.STRATEGY is not None:
             print(f"Running strategy {config.STRATEGY}" "\n")
-            Backtester(symbol=trading_symbol, candlestick_duration=candlestick_duration).run_backtest()
+            Backtester(symbol=trading_symbol).run_backtest()
 
 
     db.close()

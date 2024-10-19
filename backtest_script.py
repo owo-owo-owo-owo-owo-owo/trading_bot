@@ -1,4 +1,4 @@
-# backtesting.py
+# backtest_script.py
 from idlelib.iomenu import encoding
 
 import numpy as np
@@ -7,6 +7,7 @@ from sqlalchemy import false
 
 from sma_strat import SMA_strat
 from macd_strat import MACD_strat
+
 
 
 import config
@@ -22,7 +23,7 @@ class Backtester:
         """
         Fetch historical OHLC data from the database and convert it into a pandas DataFrame.
         """
-        table_name = config.table_name
+        table_name = config.db_name
         raw_data = self.db.fetch_data(table_name)
         
         # Create a pandas DataFrame
@@ -38,7 +39,7 @@ class Backtester:
         """
         initial_capital = config.INITIAL_CAPITAL  # Starting capital for backtesting
         df['pct change'] = df['close'].pct_change()
-        df['strategy_returns'] = df['position'] * df['pct change']     #chi lo sa se sono davvero questi i ritorni (ne dubito)   #ho sistemato sopra forse ora da il risultato corretto
+        df['strategy_returns'] = config.Bet * df['position'] * df['pct change']     #chi lo sa se sono davvero questi i ritorni (ne dubito)   #ho sistemato sopra forse ora da il risultato corretto
 
         # Calculate cumulative returns
         df['cumulative_returns'] = df['strategy_returns'].cumsum()

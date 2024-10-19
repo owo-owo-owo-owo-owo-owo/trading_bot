@@ -4,11 +4,11 @@
 DATABASE_NAME = 'crypto_data.sqlite'
 
 # Trading Configuration
-TRADING_SYMBOL = 'BTCUSDT'  # The pair we are trading
+TRADING_SYMBOL = 'ETHUSDT'  # The pair we are trading
 TIME_FRAMES = ['1m', '5m', '15m', '1h']  # Supported time frames
-CANDLESTICK_DURATION = '1m'  # time length of the candlesticks (kline api)
+CANDLESTICK_DURATION = '1d'  # time length of the candlesticks (kline api)
 DATA_LIMIT = 1000  # Limit of historical data points to fetch
-table_name = f'{TRADING_SYMBOL}_{CANDLESTICK_DURATION}_{DATA_LIMIT}'
+db_name = f'{TRADING_SYMBOL}_{CANDLESTICK_DURATION}_{DATA_LIMIT}.csv'
 
 # Binance API Configuration
 BINANCE_BASE_URL = 'https://api.binance.com/api/v3/klines'
@@ -19,6 +19,7 @@ API_SECRET = ''  # Leave blank for now
 INITIAL_CAPITAL = 100  # Starting capital for backtesting
 SMA_SHORT_WINDOW = 5  # Short window for SMA in the backtest strategy
 SMA_LONG_WINDOW = 30  # Long window for SMA in the backtest strategy
+Bet = 30
 
 
 # LSTM Model Configuration

@@ -1,6 +1,7 @@
 # database.py
 import sqlite3
 import config
+import csv
 
 class Database:
     def __init__(self, db_name=config.DATABASE_NAME):
@@ -30,6 +31,8 @@ class Database:
         fetch_query = f"SELECT * FROM {table_name} ORDER BY timestamp ASC"
         self.cursor.execute(fetch_query)
         return self.cursor.fetchall()
+
+
 
     def close(self):
         self.conn.close()
