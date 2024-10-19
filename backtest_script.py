@@ -1,4 +1,4 @@
-# backtesting.py
+# backtest_script.py
 from idlelib.iomenu import encoding
 
 import numpy as np
@@ -23,7 +23,7 @@ class Backtester:
         """
         Fetch historical OHLC data from the database and convert it into a pandas DataFrame.
         """
-        table_name = config.table_name
+        table_name = config.db_name
         raw_data = self.db.fetch_data(table_name)
         
         # Create a pandas DataFrame
