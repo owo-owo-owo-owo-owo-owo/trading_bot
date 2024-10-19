@@ -36,35 +36,7 @@ class simplestrat(Strategy):
             except:
                 pass
 
-'''
-db = Database(db_name=config.DATABASE_NAME)
-table_name = config.table_name
-db.create_table(table_name)
 
-results = db.fetch_data(table_name)
-if results:
-    print("data found in local database" '\n')
-    ohlc_data = db.fetch_data(table_name)
-if not results:
-    # Fetch historical data
-    fetcher = DataFetcher()
-    ohlc_data = fetcher.fetch_ohlc(symbol=config.TRADING_SYMBOL, interval=config.CANDLESTICK_DURATION, limit=config.DATA_LIMIT)
-
-    # Insert data into the database
-if ohlc_data:
-    db.create_table(table_name)
-    db.insert_data(table_name, ohlc_data)
-    print(f"Inserted {len(ohlc_data)} rows into {table_name} table.", "\n")
-
-table_name = config.table_name
-raw_data = db.fetch_data(table_name)
-
-# Create a pandas DataFrame
-df = pd.DataFrame(raw_data, columns=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
-print(df)
-df = df.drop(columns=['timestamp'])
-print(df)
-'''
 db = DataFetcher.fetch_ohlc(config.TRADING_SYMBOL, interval=config.CANDLESTICK_DURATION, limit=config.DATA_LIMIT)
 data = pd.read_csv(db)
 data.columns = [column.capitalize() for column in data.columns]
