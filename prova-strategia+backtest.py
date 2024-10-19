@@ -1,11 +1,9 @@
 from fileinput import close
-
 import numpy as np
 import pandas as pd
 import talib
 from backtesting import Backtest, Strategy
 from sqlalchemy import column
-
 from database import Database
 import config
 from data_fetch import DataFetcher
@@ -16,7 +14,7 @@ class simplestrat(Strategy):
 
     def init(self):
         close = self.data.Close
-        self.sma = self.I(talib.SMA, close, self.n)
+        self.sma = self.I(talib.SMA, close, self.n)   # I = func from backtest module used to create an indicator. grammar: I(indicator_names, args)
 
     def next(self):
         price = self.data.Close
