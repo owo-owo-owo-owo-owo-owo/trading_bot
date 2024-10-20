@@ -1,28 +1,21 @@
 import numpy as np
 import pandas as pd
-import config
-import database
-from database import Database
+import talib
+from backtesting import Strategy
+from backtesting.lib import crossover
 
+class SMA_cross(Strategy):
+    s = 57
+    l = 100
 
-class SMA_strat:
-    def __init__(self):
-        self.db = Database()
-        self.data = None
+    def init(self):
+        self.short_sma = self.I(talib.SMA, self.data.Close, self.s)
+        self.long_sma = self.I(talib.SMA, self.data.Close, self.l)
 
-    def sma(self,short_window=config.SMA_SHORT_WINDOW,long_window=config.SMA_LONG_WINDOW):
-        if self.data is None:
-            print("No data available for backtesting.")
-            return
-
-        df = self.data.copy()
-        df['SMA_short'] = df['close'].rolling(window=short_window).mean()  # calcolo del SMA
-        df['SMA_long'] = df['close'].rolling(window=long_window).mean()
-
-        # Generate signals
-        df['signal'] = 0
-        df['signal'][long_window:] = np.where(df['SMA_short'][long_window:] > df['SMA_long'][long_window:], 1, -1)
-        df['position'] = df['signal'].rolling(window=2).sum()
-
-        # Return the backtested DataFrame
-        return df
+    def next(self):
+        if crossover(self.short_sma, self.long_sma):
+            self.position.close()
+            self.sell()
+        elif crossover(self.long_sma, self.short_sma):
+            self.position.close()
+            self.buy()

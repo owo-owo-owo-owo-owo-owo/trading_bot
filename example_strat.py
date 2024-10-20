@@ -1,10 +1,6 @@
-import numpy as np
-import pandas as pd
 import talib
-from backtesting import Backtest, Strategy
+from backtesting import Strategy
 
-import config
-from data_fetch import DataFetcher
 
 class simplestrat(Strategy):
     n = 20
@@ -30,18 +26,3 @@ class simplestrat(Strategy):
                 self.buy(sl = stop_loss, tp = take_profit)
             except:
                 pass
-
-
-db = DataFetcher.fetch_ohlc(config.TRADING_SYMBOL, interval=config.CANDLESTICK_DURATION, limit=config.DATA_LIMIT)
-data = pd.read_csv(db)
-data.columns = [column.capitalize() for column in data.columns]
-data.index = pd.DatetimeIndex(data['Timestamp'])             # define index of the dataframe
-data = data.drop(columns=['Timestamp'])
-
-bt = Backtest(data, simplestrat, cash=1000000, commission=.002)
-
-#result = bt.optimize(maximize='Equity Final [$]', n=range(4,40,1))
-
-#print(result)
-#bt.plot()
-print(bt)

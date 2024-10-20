@@ -1,10 +1,11 @@
 # config.py
 
+
 # Database Configuration
 DATABASE_NAME = 'crypto_data.sqlite'
 
 # Trading Configuration
-TRADING_SYMBOL = 'ETHUSDT'  # The pair we are trading
+TRADING_SYMBOL = 'JUVUSDT'  # The pair we are trading
 TIME_FRAMES = ['1m', '5m', '15m', '1h']  # Supported time frames
 CANDLESTICK_DURATION = '1d'  # time length of the candlesticks (kline api)
 DATA_LIMIT = 1000  # Limit of historical data points to fetch
@@ -16,10 +17,9 @@ API_KEY = ''  # Leave blank for now if using a public API (no key required)
 API_SECRET = ''  # Leave blank for now
 
 # Backtesting Configuration
-INITIAL_CAPITAL = 100  # Starting capital for backtesting
-SMA_SHORT_WINDOW = 5  # Short window for SMA in the backtest strategy
-SMA_LONG_WINDOW = 30  # Long window for SMA in the backtest strategy
-Bet = 30
+INITIAL_CAPITAL = 10000
+COMMISSION = 0.002
+
 
 
 # LSTM Model Configuration
@@ -31,4 +31,4 @@ THRESHOLD = 0.6  # Threshold for the certainty required for trading decision
 
 # Strategy Selection
 
-STRATEGY = 'macd_strategy'
+STRATEGY = 'MACD_strat.macd'
