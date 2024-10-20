@@ -7,7 +7,7 @@ import config
 import talib
 
 
-def macd_indicator(close, n1=12, n2=26, n3=9):
+def macd_indicator(close, n1, n2, n3):
     macd, signal, hist = talib.MACD(close, fastperiod=n1, slowperiod=n2, signalperiod=n3)
     return macd  # or return (macd, signal, hist) based on what you want
 
