@@ -5,8 +5,8 @@ from backtesting import Strategy
 from backtesting.lib import crossover
 
 class SMA_cross(Strategy):
-    s = 20
-    l = 60
+    s = 57
+    l = 100
 
     def init(self):
         self.short_sma = self.I(talib.SMA, self.data.Close, self.s)

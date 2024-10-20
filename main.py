@@ -4,10 +4,10 @@ import new_backtester
 import warnings
 from new_backtester import run_backtest
 
+warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=SettingWithCopyWarning)
 
 def main():
-    warnings.simplefilter(action='ignore', category=FutureWarning)
-    warnings.simplefilter(action='ignore', category=SettingWithCopyWarning)
 
     trading_symbol = config.TRADING_SYMBOL
     candlestick_duration = config.CANDLESTICK_DURATION
