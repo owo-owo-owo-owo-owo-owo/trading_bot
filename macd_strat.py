@@ -1,37 +1,37 @@
 import numpy as np
 import pandas as pd
 from backtesting import Strategy
+from backtesting.lib import crossover
+from tensorflow.python.data.experimental.ops.testing import sleep
 import config
 import talib
 
-'''
-def I(self,
-      func: (...) -> Any,
-      *args: Any,
-      name: Any = None,
-      plot: bool = True,
-      overlay: Any = None,
-      color: Any = None,
-      scatter: bool = False,
-      **kwargs: Any) -> ndarray
-'''
+
+def macd_indicator(close, n1=12, n2=26, n3=9):
+    macd, signal, hist = talib.MACD(close, fastperiod=n1, slowperiod=n2, signalperiod=n3)
+    return macd  # or return (macd, signal, hist) based on what you want
+
+
 class MACD_strat(Strategy):
     n1 = 12
     n2 = 26
     n3 = 9
 
     def init(self):
-        self.macd = self.I(talib.MACD, self.data.Close, self.n1, self.n2, self.n3)
+        # Correct function call: using I() to integrate the custom indicator
+        self.macd = self.I(macd_indicator, self.data.Close, self.n1, self.n2, self.n3)
 
     def next(self):
-        if self.macd > 0:
-            if self.position.is_long:
-                self.position.close()
+        # self.macd is now a series, check for its values
+        if crossover(self.macd,0):
+            if not self.position:
+                self.buy()
             else:
-                self.sell()
+                self.position.close()
 
-        elif self.macd < 0:
-            if self.position.is_short:
-                self.position.close()
+        if crossover(0,self.macd):
+            if not self.position:
+                self.sell()
             else:
+                self.position.close()
                 self.buy()
