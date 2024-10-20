@@ -2,8 +2,8 @@ import pandas as pd
 from backtesting import Backtest
 import config
 from data_fetch import DataFetcher
-import sma_strat
-from backtesting.test import GOOG
+import macd_strat
+
 
 
 def run_backtest():
@@ -13,12 +13,11 @@ def run_backtest():
     data.index = pd.DatetimeIndex(data['Timestamp'])  # define index of the dataframe
     data = data.drop(columns=['Timestamp'])
 
-    bt = Backtest(data, sma_strat.SMA_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION)
-    stats = bt.optimize(s=range(49, 60, 1),l=range(99, 101, 1),maximize='Equity Final [$]',constraint=lambda param: param.s < param.l)   #in range(a,b,c) a>c e nemmeno uguale
-
-    print(stats,'\n')
-    print(stats._strategy,'\n')
-    print(stats['_trades'])
+    bt = Backtest(data, macd_strat.MACD_strat, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION)
+    #stats = bt.optimize(s=range(49, 60, 1),l=range(99, 101, 1),maximize='Equity Final [$]',constraint=lambda param: param.s < param.l)   #in range(a,b,c) a>c e nemmeno uguale
+    print(bt.run())
+    #print(stats._strategy,'\n')
+    #print(stats['_trades'])
 
 if __name__ == '__main__':
     run_backtest()

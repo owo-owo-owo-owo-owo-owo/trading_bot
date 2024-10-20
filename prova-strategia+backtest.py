@@ -44,4 +44,4 @@ bt = Backtest(data, simplestrat, cash=1000000, commission=.002)
 
 #print(result)
 #bt.plot()
-print(data)
+print(bt)
