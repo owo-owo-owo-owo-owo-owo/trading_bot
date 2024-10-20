@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 import config
-from database import Database
+
 from keras.models import Sequential
 from keras.layers import LSTM, Dense
 import os

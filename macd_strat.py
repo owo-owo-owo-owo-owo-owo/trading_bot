@@ -5,7 +5,7 @@ from backtesting import Strategy
 
 import config
 from config import STRATEGY
-from database import Database
+
 from ta.trend import macd
 
 
