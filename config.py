@@ -17,9 +17,9 @@ API_KEY = ''  # Leave blank for now if using a public API (no key required)
 API_SECRET = ''  # Leave blank for now
 
 # Backtesting Configuration
-INITIAL_CAPITAL = 10000000
+INITIAL_CAPITAL = 1000
 COMMISSION = 0.002
-
+FRACTION_FACTOR = 1000
 
 
 # LSTM Model Configuration

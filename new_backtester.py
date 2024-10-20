@@ -16,11 +16,17 @@ def run_backtest():
     data.index = pd.DatetimeIndex(data['Timestamp'])  # define index of the dataframe
     data = data.drop(columns=['Timestamp'])
 
+    data.Open /= config.FRACTION_FACTOR
+    data.High /= config.FRACTION_FACTOR
+    data.Low /= config.FRACTION_FACTOR
+    data.Close /= config.FRACTION_FACTOR
+    data.Volume *= config.FRACTION_FACTOR
+
     bt = Backtest(data, RSI_MA_crossover.RSI_MA_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION)
-    #stats = bt.optimize(s=range(49, 60, 1),l=range(99, 101, 1),maximize='Equity Final [$]',constraint=lambda param: param.s < param.l)   #in range(a,b,c) a>c e nemmeno uguale
+    stats = bt.optimize(RSI_overbought=range(1,100), RSI_oversold=range(1,100), time=range(3,20),maximize='Equity Final [$]',constraint=lambda param: param.RSI_oversold < param.RSI_overbought)   #in range(a,b,c) a>c e nemmeno uguale
     print(bt.run())
-    #print(stats._strategy,'\n')
-    #print(stats['_trades'])
+    print(stats._strategy,'\n')
+    print(stats['_trades'])
 
 if __name__ == '__main__':
     run_backtest()

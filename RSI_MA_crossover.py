@@ -14,9 +14,9 @@ def sma_indicator(close, time):
     return sma
 
 class RSI_MA_cross(Strategy):
-    RSI_overbought = 70
-    RSI_oversold = 30
-    time = 12
+    RSI_overbought = 60
+    RSI_oversold = 40
+    time = 10
 
     def init(self):
         self.rsi = self.I(rsi_indicator,self.data.Close, self.time)
@@ -25,14 +25,14 @@ class RSI_MA_cross(Strategy):
     def next(self):
         if self.rsi > self.RSI_overbought and self.data.Close > self.sma:
             if not self.position:
-                self.sell()
+                self.sell(limit=300000)
             elif self.position.is_long:
                 self.position.close()
-                self.sell()
+                self.sell(limit=300000)
 
         elif self.rsi < self.RSI_oversold and self.data.Close < self.sma:
             if not self.position:
-                self.buy()
+                self.buy(limit=300000)
             elif self.position.is_short:
                 self.position.close()
-                self.buy()
+                self.buy(limit=300000)
