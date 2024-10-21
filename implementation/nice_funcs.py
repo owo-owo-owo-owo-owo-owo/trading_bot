@@ -2,11 +2,12 @@
 
 import pandas as pd
 import pandas_ta as ta
-
+import config
+from data_fetch import DataFetcher
 
 def calculate_vwap_with_wymbol(symbol):
-    snapshot_data = get_ohlcv2(symbol, '10m', 300)
-    df = process_data_to_df(snapshot_data)
+    snapshot_data = DataFetcher(config.TRADING_SYMBOL, config.CANDLESTICK_DURATION, config.DATA_LIMIT)      #this should ber working  but must be tested in implementation_test to confirm. Errors should still be minimal and limited to class errors (market data not formatted as a dataframe)
+    df = pd.read_csv(snapshot_data)
 
     #convert the timestamp to datetime
     df['timestamp'] = pd.to_datetime(df['timestamp'])

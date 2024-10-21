@@ -19,7 +19,7 @@ import datetime
 import schedule
 import requests
 import nice_funcs as n  #file che contiene le funzioni necessare per la strategia
-from dontshareconfig import secret   # file che contiene API keys
+#from dontshareconfig import secret   #Todo cambiare questo con i parametri su config
 
 
 symbol = 'SOL'
