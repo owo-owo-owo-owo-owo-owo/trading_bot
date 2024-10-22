@@ -5,8 +5,10 @@ librerie da installare in aggiunta a quelle gia present:
 - schedule
 hyperliquid-python-sdk
 '''
+import os
+from time import sleep
+import config
 from ccxt import hyperliquid
-#vwap market maker
 from eth_account.signers.local import LocalAccount
 import eth_account
 import json
@@ -18,8 +20,12 @@ import pandas as pd
 import datetime
 import schedule
 import requests
-import nice_funcs as n  #file che contiene le funzioni necessare per la strategia
-#from dontshareconfig import secret   #Todo cambiare questo con i parametri su config
+import nice_funcs as n  #file che contiene le funzioni necessarie per la strategia
+
+'''
+ignored for now as it is incomplete and it is clearer to study from official exchange APIs
+'''
+
 
 
 symbol = 'SOL'
@@ -33,7 +39,7 @@ target = 4
 leverage = 4
 
 def bot():
-    account1 = LocalAccount = eth_account.Account.from_key(secret)
+    account1 : LocalAccount = eth_account.Account.from_key(config.SECRET_KEY)   #setup of the account to be used from secret key of the wallet
     positions1, im_in_pos, mypos_size, pos_syml, entry_px1, pnl_perc1, long1, num_of_pos = n.get_position(symbol,account1)
     print(f'these are position {symbol} {positions1} and we are in {num_of_pos} positions')
 
@@ -88,7 +94,7 @@ def bot():
         print('canceled all orders')
 
         n.limit_order(symbol, True, pos_size, bid11, account1)
-        print(f'placed limit order fro {symbol} at {bid11} size')
+        print(f'placed limit order for {symbol} at {bid11} size')
 
     elif not im_in_pos and not going_long:
         n.cancel_all_orders(account1)

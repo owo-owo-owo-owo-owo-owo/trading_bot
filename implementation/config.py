@@ -16,6 +16,9 @@ BINANCE_BASE_URL = 'https://api.binance.com/api/v3/klines'
 API_KEY = ''  # Leave blank for now if using a public API (no key required)
 API_SECRET = ''  # Leave blank for now
 
+SECRET_KEY = ''
+
+
 # Backtesting Configuration
 INITIAL_CAPITAL = 1000
 COMMISSION = 0.002

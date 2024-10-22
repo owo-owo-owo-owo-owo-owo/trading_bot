@@ -4,6 +4,15 @@ import pandas as pd
 import pandas_ta as ta
 import config
 from data_fetch import DataFetcher
+''' 
+functions stil to be added in this file for implementation to work:
+- adjust_leverage_size_signal
+- cancel_all_orders
+- pnl_close
+- ask_bid
+- cancel_all_orders
+- limit_order
+'''
 
 def calculate_vwap_with_wymbol(symbol):
     snapshot_data = DataFetcher(config.TRADING_SYMBOL, config.CANDLESTICK_DURATION, config.DATA_LIMIT)      #this should ber working  but must be tested in implementation_test to confirm. Errors should still be minimal and limited to class errors (market data not formatted as a dataframe)
@@ -29,3 +38,4 @@ def calculate_vwap_with_wymbol(symbol):
     latest_vwap = df['vwap'].iloc[-1]
 
     return df, latest_vwap
+
