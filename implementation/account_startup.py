@@ -13,7 +13,7 @@ def account_startup():
     or withdraw funds.
     """
 
-    address, info = example_utils.setup(constants.TESTNET_API_URL, skip_ws=True)
+    address, info, exchange = utils.setup(constants.TESTNET_API_URL, skip_ws=True)
 
     account: LocalAccount = eth_account.Account.from_key(config.SECRET_KEY)        #initialize a local account with the private key, stored in config.py
     print("Running with agent address:", account.address)

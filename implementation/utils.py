@@ -27,12 +27,6 @@ def setup(base_url=None, skip_ws=False):
         error_string = f"No accountValue:\nIf you think this is a mistake, make sure that {address} has a balance on {url}.\nIf address shown is your API wallet address, update the config to specify the address of your account, not the address of the API wallet."
         raise Exception(error_string)
 
-    #exchange = Exchange(account, base_url, account_address=address)
-    '''
-    dont know what the previous line does as commenting it does not affect behaviour in account_startup
-    and it is the exact same as account_exchange = Exchange(account, constants.TESTNET_API_URL, account_address=address)
-    in account_startup
-    will investigate further and check if this creates any error in the long run
-    '''
+    exchange = Exchange(account, base_url, account_address=address)
 
-    return address, info
+    return address, info, exchange
