@@ -17,8 +17,8 @@ def account_startup():
 
     account: LocalAccount = eth_account.Account.from_key(config.SECRET_KEY)        #initialize a local account with the private key, stored in config.py
     print("Running with agent address:", account.address)
-    account_exchange = Exchange(account, constants.TESTNET_API_URL, account_address=address)    # initialize exchange instance for the account
+    exchange = Exchange(account, constants.TESTNET_API_URL, account_address=address)    # initialize exchange instance for the account
 
-    return  account, account_exchange
+    user_state = info.user_state(address)  # returns info about user {'marginSummary': {'accountValue': '0.0', 'totalNtlPos': '0.0', 'totalRawUsd': '0.0', 'totalMarginUsed': '0.0'}, 'crossMarginSummary': {'accountValue': '0.0', 'totalNtlPos': '0.0', 'totalRawUsd': '0.0', 'totalMarginUsed': '0.0'}, 'crossMaintenanceMarginUsed': '0.0', 'withdrawable': '0.0', 'assetPositions': [], 'time': 1729687516203}
 
-account_startup()
+    return  account, exchange

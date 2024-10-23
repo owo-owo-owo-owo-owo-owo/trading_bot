@@ -52,7 +52,7 @@ def bot():
     else:
         print('not in position so no pnl close')
 
-    #get the price
+    #get the price with the 'subscribe' method
     ask, bid, l2_data = n.ask_bid(symbol)
 
     bid11 = float(l2_data[0][10]['px'])
@@ -72,7 +72,10 @@ def bot():
 
     random_chance = random.random()
 
-    if bid > latest_vwap:
+
+#start of the strategy
+
+    if bid > latest_vwap:      #decide whether to go long or short
         if random_chance <= .7:
             going_long = True
             print('going long')
@@ -89,7 +92,7 @@ def bot():
             print([f'price is below vwap {bid} < {latest_vwap} and we are not going long'])
 
 
-    if im_in_pos and going_long:
+    if im_in_pos and going_long:      # order placing section
         n.cancel_all_orders(account1)
         print('canceled all orders')
 
