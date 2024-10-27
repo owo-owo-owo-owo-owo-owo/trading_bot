@@ -4,6 +4,22 @@ from eth_account.signers.local import LocalAccount
 import config
 from hyperliquid.exchange import Exchange
 from hyperliquid.utils import constants
+from hyperliquid import info
+from hyperliquid.utils.types import (
+    SIDES,
+    Dict,
+    L2BookMsg,
+    L2BookSubscription,
+    Literal,
+    Optional,
+    Side,
+    TypedDict,
+    Union,
+    UserEventsMsg,
+    UserEventsSubscription,
+)
+
+import schedule
 
 
 def account_startup():
@@ -21,4 +37,4 @@ def account_startup():
 
     user_state = info.user_state(address)  # returns info about user {'marginSummary': {'accountValue': '0.0', 'totalNtlPos': '0.0', 'totalRawUsd': '0.0', 'totalMarginUsed': '0.0'}, 'crossMarginSummary': {'accountValue': '0.0', 'totalNtlPos': '0.0', 'totalRawUsd': '0.0', 'totalMarginUsed': '0.0'}, 'crossMaintenanceMarginUsed': '0.0', 'withdrawable': '0.0', 'assetPositions': [], 'time': 1729687516203}
 
-    return  account, exchange
+    return  account
