@@ -4,9 +4,12 @@ from backtesting import Strategy
 from backtesting.lib import crossover
 import config
 import talib
+import pandas_ta as ta
 
 def rsi_indicator(close,time):
     rsi = talib.RSI(close,time)
+    #rsi = ta.rsi(close,time)
+    print(rsi)
     return rsi
 
 def sma_indicator(close, time):

@@ -2,36 +2,62 @@ import numpy as np
 import pandas as pd
 from backtesting import Strategy
 from backtesting.lib import crossover
-from tensorflow.python.data.experimental.ops.testing import sleep
 import config
 import talib
+import pandas_ta as ta
+from data_fetch import DataFetcher
+import matplotlib.pyplot as plt
 
 
-def macd_indicator(close, n1, n2, n3):
-    macd, signal, hist = talib.MACD(close, fastperiod=n1, slowperiod=n2, signalperiod=n3)
-    return macd  # or return (macd, signal, hist) based on what you want
+#db = DataFetcher.fetch_ohlc(config.TRADING_SYMBOL, interval=config.CANDLESTICK_DURATION, limit=config.DATA_LIMIT)
+#data = pd.read_csv(db)
+
+def md(close,  fast, slow, signal,offset):
+    macd_data = ta.macd(close, fast, slow, signal, offset)
+    return macd_data['MACD_12_26_7'], macd_data['MACDs_12_26_7'], macd_data['MACDh_12_26_7']
 
 
-class MACD_strat(Strategy):
-    n1 = 12
-    n2 = 26
-    n3 = 9
+def long_ma(close, period):
+    #close = data['Close']
+    #period = 100
+    long_ma = talib.SMA(close, period)
+    return long_ma
+
+
+class macd_cross(Strategy):
+
+    period = 100
+
+    fast = 12
+    slow = 26
+    signal = 7
+    offset = 9
+
 
     def init(self):
-        # Correct function call: using I() to integrate the custom indicator
-        self.macd = self.I(macd_indicator, self.data.Close, self.n1, self.n2, self.n3)
+        self.macd, self.macd_signal, self.macd_histogram = self.I(md,pd.Series(self.data.Close),self.fast, self.slow, self.signal, self.offset)
+        self.ma = self.I(long_ma, pd.Series(self.data.Close), self.period)
+        #print(f' macd normal, {self.macd}, macd histogram{self.macd_histogram} , macd signal {self.macd_signal}')
 
     def next(self):
-        # self.macd is now a series, check for its values
-        if crossover(self.macd,0):
-            if not self.position:
-                self.buy()
-            else:
-                self.position.close()
+            price = self.data.Close[-1]
+            stop_loss = min(price * 0.9998, self.ma[-60])
 
-        if crossover(0,self.macd):
+            '''
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            '''
+            take_profit = max(price * 1.04, 1.002 * self.ma[-1])
+            print(stop_loss,'\n',price,'\n', take_profit, '\n')
+
             if not self.position:
-                self.sell()
-            else:
-                self.position.close()
-                self.buy()
+                #if stop_loss < price < take_profit:
+                    if self.macd[-1] > self.macd_signal[-1] and self.macd[-2] <= self.macd_signal[-2]:
+                        self.buy(sl=stop_loss, tp=take_profit)
+

@@ -33,10 +33,10 @@ address, info, exchange = utils.setup()
 
 class prova:
     def __init__(self):
-        l2_book_subscription: L2BookSubscription = {"type": "l2Book", "coin": "BTC"}
+        l2_book_subscription: L2BookSubscription = {"type": "l2Book", "coin": "SOL"}
         info.subscribe(l2_book_subscription, self.on_book_update)
 
-        candle_subscription: CandleSubscription = {"type": "candle", "coin": "BTC","interval": "1m"}  # Replace "1m" with the desired interval
+        candle_subscription: CandleSubscription = {"type": "candle", "coin": "SOL","interval": "1m"}  # Replace "1m" with the desired interval
         info.subscribe(candle_subscription, self.on_candle_update)
 
     def on_book_update(self, book_msg: L2BookMsg) -> None:
