@@ -23,9 +23,10 @@ def run_backtest():
     data.Close /= config.FRACTION_FACTOR
     data.Volume *= config.FRACTION_FACTOR
 
-    bt = Backtest(data, macd_strat.macd_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION)
+    bt = Backtest(data, macd_strat.macd_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION, margin=0.7)
     #stats = bt.optimize(RSI_overbought=range(1,100), RSI_oversold=range(1,100), time=range(3,20),maximize='Equity Final [$]',constraint=lambda param: param.RSI_oversold < param.RSI_overbought)   #in range(a,b,c) a>c e nemmeno uguale
     backtest = bt.run()
+    #bt.plot()
     print(backtest)
     print(backtest['_trades'].to_string())
     #print(stats._strategy,'\n')

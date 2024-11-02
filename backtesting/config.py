@@ -8,7 +8,7 @@ DATABASE_NAME = 'crypto_data.sqlite'
 TRADING_SYMBOL = 'BTCUSDT'  # The pair we are trading
 TIME_FRAMES = ['1m', '5m', '15m', '1h']  # Supported time frames
 CANDLESTICK_DURATION = '1h'  # time length of the candlesticks (kline api)
-DATA_LIMIT = 1000  # Limit of historical data points to fetch
+DATA_LIMIT = 2000  # Limit of historical data points to fetch
 db_name = f'{TRADING_SYMBOL}_{CANDLESTICK_DURATION}_{DATA_LIMIT}.csv'
 
 # Binance API Configuration
@@ -19,7 +19,7 @@ API_SECRET = ''  # Leave blank for now
 # Backtesting Configuration
 INITIAL_CAPITAL = 1000
 COMMISSION = 0.002
-FRACTION_FACTOR = 1000
+FRACTION_FACTOR = 100000
 
 
 # LSTM Model Configuration

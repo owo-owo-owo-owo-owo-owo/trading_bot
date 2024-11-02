@@ -26,7 +26,7 @@ def long_ma(close, period):
 
 class macd_cross(Strategy):
 
-    period = 100
+    period = 200
 
     fast = 12
     slow = 26
@@ -41,7 +41,7 @@ class macd_cross(Strategy):
 
     def next(self):
             price = self.data.Close[-1]
-            stop_loss = min(price * 0.9998, self.ma[-60])
+            stop_loss = 1.02*(price - (price-self.ma[-1]))
 
             '''
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
@@ -52,12 +52,36 @@ class macd_cross(Strategy):
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
+            USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
             '''
-            take_profit = max(price * 1.04, 1.002 * self.ma[-1])
-            print(stop_loss,'\n',price,'\n', take_profit, '\n')
+            take_profit = price + 1.4 *(price-stop_loss)
+            #print(stop_loss,'\n',price,'\n', take_profit, '\n')
+
+            support = np.min(self.data.Close[-60:])
+            resistance = np.max(self.data.Close[-60:])
+
+            if (resistance-support/price) < 0.004:
+                market_is_stagnant = False
+            else:
+                market_is_stagnant = True
 
             if not self.position:
-                #if stop_loss < price < take_profit:
-                    if self.macd[-1] > self.macd_signal[-1] and self.macd[-2] <= self.macd_signal[-2]:
-                        self.buy(sl=stop_loss, tp=take_profit)
+                if market_is_stagnant == False:
+                    if stop_loss < price < take_profit:
+                        if self.macd[-1] > self.macd_signal[-1] and self.macd[-2] <= self.macd_signal[-2] and self.macd[-1] < 0:
+                            self.buy(size=100,limit=price, sl=stop_loss, tp=take_profit)
 
+                    elif stop_loss > price > take_profit:
+                        if self.macd[-1] > 0 and self.macd[-1] < self.macd_signal and self.macd[-2] > self.macd_signal[-2]:
+                            self.sell(size=100,limit=price, sl=stop_loss, tp=take_profit)
+
+                elif market_is_stagnant == True:
+                    if stop_loss < price < take_profit:
+                        if self.macd[-1] > self.macd_signal[-1] and self.macd[-2] <= self.macd_signal[-2] and self.macd[
+                            -1] < 0:
+                            self.buy(size=100,limit=price, sl=stop_loss, tp=take_profit)
+
+                    elif stop_loss > price > take_profit:
+                        if self.macd[-1] > 0 and self.macd[-1] < self.macd_signal and self.macd[-2] > self.macd_signal[
+                            -2]:
+                            self.sell(size=100,limit=price, sl=stop_loss, tp=take_profit)

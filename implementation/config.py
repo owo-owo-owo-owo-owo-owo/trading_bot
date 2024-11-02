@@ -16,7 +16,7 @@ BINANCE_BASE_URL = 'https://api.binance.com/api/v3/klines'
 API_KEY = ''  # Leave blank for now if using a public API (no key required)
 API_SECRET = ''  # Leave blank for now
 
-SECRET_KEY = ''
+SECRET_KEY = '2a35ab1ec496f6afb4c2c3281c4ecd5aaedda4150ad66a019887d8ad955986ac'
 
 
 # Backtesting Configuration
