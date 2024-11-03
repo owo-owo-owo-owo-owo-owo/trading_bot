@@ -27,7 +27,7 @@ def run_backtest():
 
     bt = Backtest(data, macd_strat.macd_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION, margin=0.7)
     #stats = bt.optimize(RSI_overbought=range(1,100), RSI_oversold=range(1,100), time=range(3,20),maximize='Equity Final [$]',constraint=lambda param: param.RSI_oversold < param.RSI_overbought)   #in range(a,b,c) a>c e nemmeno uguale
-    stats = bt.optimize(fast=range(6,18), slow=range(12,34), signal=range(3,9), offset=range(7,13), sl_k=range(101,108,1), tp_k=range(102,108,5), maximize='Equity Final [$]', constraint=lambda param: param.slow>param.fast)
+    stats = bt.optimize(fast=range(6,18), slow=range(12,34), signal=range(3,9), offset=range(7,13), sl_k=range(101,108), tp_k=range(102,108), maximize='Equity Final [$]', constraint=lambda param: param.slow>param.fast)
     #backtest = bt.run()
     #bt.plot()
     #print(backtest)
