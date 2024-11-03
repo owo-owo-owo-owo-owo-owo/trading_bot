@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def md(close,  fast, slow, signal,offset):
     macd_data = ta.macd(close, fast, slow, signal, offset)
-    return macd_data['MACD_12_26_7'], macd_data['MACDs_12_26_7'], macd_data['MACDh_12_26_7']
+    return macd_data[f'MACD_{fast}_{slow}_{signal}'], macd_data[f'MACDs_{fast}_{slow}_{signal}'], macd_data[f'MACDh_{fast}_{slow}_{signal}']
 
 
 def long_ma(close, period):
@@ -33,6 +33,9 @@ class macd_cross(Strategy):
     signal = 7
     offset = 9
 
+    sl_k = 102
+    tp_k = 106
+
 
     def init(self):
         self.macd, self.macd_signal, self.macd_histogram = self.I(md,pd.Series(self.data.Close),self.fast, self.slow, self.signal, self.offset)
@@ -41,7 +44,7 @@ class macd_cross(Strategy):
 
     def next(self):
             price = self.data.Close[-1]
-            stop_loss = 1.02*(price - (price-self.ma[-1]))
+            stop_loss = (self.sl_k/100) * (price - (price-self.ma[-1]))
 
             '''
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
@@ -54,11 +57,12 @@ class macd_cross(Strategy):
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
             USA IL FOTTUTISSIMO PUNTO PER I CAZZO DI NUMERI DECIMALI
             '''
-            take_profit = price + 1.4 *(price-stop_loss)
+            take_profit = price + (self.tp_k/100) * (price-stop_loss)
             #print(stop_loss,'\n',price,'\n', take_profit, '\n')
 
             support = np.min(self.data.Close[-60:])
             resistance = np.max(self.data.Close[-60:])
+            #print(support, '\n', resistance,'\n')
 
             if (resistance-support/price) < 0.004:
                 market_is_stagnant = False
@@ -79,9 +83,9 @@ class macd_cross(Strategy):
                     if stop_loss < price < take_profit:
                         if self.macd[-1] > self.macd_signal[-1] and self.macd[-2] <= self.macd_signal[-2] and self.macd[
                             -1] < 0:
-                            self.buy(size=100,limit=price, sl=stop_loss, tp=take_profit)
+                            self.buy(size=100,limit=price, sl=resistance, tp=support)
 
                     elif stop_loss > price > take_profit:
                         if self.macd[-1] > 0 and self.macd[-1] < self.macd_signal and self.macd[-2] > self.macd_signal[
                             -2]:
-                            self.sell(size=100,limit=price, sl=stop_loss, tp=take_profit)
+                            self.sell(size=100,limit=price, sl=resistance, tp=support)

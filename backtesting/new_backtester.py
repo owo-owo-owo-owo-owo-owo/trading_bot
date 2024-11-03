@@ -7,7 +7,9 @@ from data_fetch import DataFetcher
 import example_strat
 import sma_strat
 import RSI_MA_crossover
+import time
 
+start_time = time.time()
 
 
 def run_backtest():
@@ -25,12 +27,19 @@ def run_backtest():
 
     bt = Backtest(data, macd_strat.macd_cross, cash=config.INITIAL_CAPITAL, commission=config.COMMISSION, margin=0.7)
     #stats = bt.optimize(RSI_overbought=range(1,100), RSI_oversold=range(1,100), time=range(3,20),maximize='Equity Final [$]',constraint=lambda param: param.RSI_oversold < param.RSI_overbought)   #in range(a,b,c) a>c e nemmeno uguale
-    backtest = bt.run()
+    stats = bt.optimize(fast=range(6,18), slow=range(12,34), signal=range(3,9), offset=range(7,13), sl_k=range(101,108,1), tp_k=range(102,108,5), maximize='Equity Final [$]', constraint=lambda param: param.slow>param.fast)
+    #backtest = bt.run()
     #bt.plot()
-    print(backtest)
-    print(backtest['_trades'].to_string())
-    #print(stats._strategy,'\n')
-    #print(stats['_trades'])
+    #print(backtest)
+    #print(backtest['_trades'].to_string())
+    print(stats)
+    print(stats._strategy,'\n')
+    print(stats['_trades'])
+
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time:.4f} seconds")
+
 
 if __name__ == '__main__':
     run_backtest()
